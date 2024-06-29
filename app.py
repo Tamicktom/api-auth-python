@@ -1,6 +1,12 @@
 # Libraries imports
 from flask import Flask, jsonify, request
-from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+from flask_login import (
+    LoginManager,
+    login_user,
+    current_user,
+    logout_user,
+    login_required,
+)
 
 # Local imports
 from models.user import User
