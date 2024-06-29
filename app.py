@@ -1,6 +1,6 @@
 # Libraries imports
 from flask import Flask, jsonify, request
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, current_user
 
 # Local imports
 from models.user import User
@@ -18,6 +18,12 @@ db.init_app(app)
 login_manager.init_app(app)
 
 # View Login
+login_manager.login_view = "login"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 @app.route("/login", methods=["POST"])
@@ -31,6 +37,8 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and user.password == password:
+            login_user(user)
+            print(current_user.is_authenticated)
             return jsonify({"message": "Autenticacao relizada com sucesso"}), 200
 
     return jsonify({"message": "Credenciais invalidas"}), 400
