@@ -1,6 +1,6 @@
 # Libraries imports
 from flask import Flask, jsonify, request
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 
 # Local imports
 from models.user import User
@@ -42,6 +42,13 @@ def login():
             return jsonify({"message": "Autenticacao relizada com sucesso"}), 200
 
     return jsonify({"message": "Credenciais invalidas"}), 400
+
+
+@app.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return jsonify({"message": "logout realizazdo com sucesso"}), 200
 
 
 @app.route("/hello", methods=["GET"])
