@@ -93,6 +93,7 @@ def update_user(id_user: int):
 
     if user and data.get("password"):
         user.password = data.get("password")
+        db.session.commit()
 
         return (
             jsonify({"message": f"Usuário {user.username} atualizado com sucesso"}),
